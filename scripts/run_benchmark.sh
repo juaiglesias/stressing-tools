@@ -145,7 +145,7 @@ for target in "${TARGETS[@]}"; do
       -e TEST_METHOD="$method" \
       -e TEST_PATH="$path" \
       -e TARGET_NAME="$target" \
-      "$ROOT/$scenario_file"
+      "$ROOT/$scenario_file" || true
 
     stop_stats
   done

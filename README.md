@@ -24,6 +24,7 @@ error rate, y uso de CPU y memoria (pico/promedio) por target.
 | php-laravel-octane  | php + laravel-octane | 3006      | /api/holamundo  |
 | php-laravel-fpm     | php + laravel-fpm    | 3007      | /api/holamundo  |
 | go-gin              | go + gin             | 3008      | /holamundo      |
+| rust-axum           | rust + axum          | 3009      | /holamundo      |
 
 **Invariantes de todo target:**
 - Escucha internamente en el puerto **3000** (el port del registry es solo el mapeo al host).
@@ -34,9 +35,13 @@ error rate, y uso de CPU y memoria (pico/promedio) por target.
 
 `config/scenarios.json` es la única fuente de verdad de los scenarios.
 
-| scenario  | archivo                | descripción                                            |
-|-----------|------------------------|--------------------------------------------------------|
-| holamundo | scenarios/holamundo.js | GET básico sin I/O, mide throughput puro del framework |
+| scenario   | archivo                 | método | descripción                                                         |
+|------------|-------------------------|--------|---------------------------------------------------------------------|
+| holamundo  | scenarios/holamundo.js  | GET    | GET básico sin I/O, mide throughput puro del framework              |
+| dbquery    | scenarios/dbquery.js    | GET    | simula acceso a DB (I/O wait ~25ms), mide el modelo de concurrencia |
+| cpucompute | scenarios/cpucompute.js | GET    | CPU-bound: O(n²) + O(C³) matrix multiply, mide cómputo crudo       |
+| memalloc   | scenarios/memalloc.js   | GET    | aloca N objetos anidados y serializa, mide presión de allocator/GC  |
+| payload    | scenarios/payload.js    | POST   | deserializa+valida+serializa un JSON mediano, mide parsing de input  |
 
 Cada scenario es un script k6 que lee `__ENV.TARGET_URL`, `__ENV.TEST_PATH` y `__ENV.TEST_METHOD`
 (inyectados por el runner), de modo que el mismo script sirve para todos los targets.
@@ -91,12 +96,18 @@ targets/             ← un subdirectorio por target, cada uno con su Dockerfile
   php-laravel-fpm/     laravel sobre php-fpm + nginx (supervisord)
   php-laravel-octane/  laravel octane sobre swoole, 4 workers
   go-gin/              gin (binario compilado, imagen alpine)
+  rust-axum/           axum + tokio (multi-stage build, imagen alpine)
 
 scenarios/
-  holamundo.js       ← GET básico sin I/O, 50 VUs, ramp 10s + 30s sostenido + 10s down
+  holamundo.js       ← GET básico sin I/O, 50 VUs
+  dbquery.js         ← GET con I/O wait ~25ms, 100 VUs
+  cpucompute.js      ← GET CPU-bound O(n²)+O(C³), 20 VUs
+  memalloc.js        ← GET con N objetos vivos, 20 VUs
+  payload.js         ← POST JSON parse/validate/serialize, 50 VUs
 
 scripts/
   generate_compose.py  ← genera docker-compose.yml desde targets.json
+  generate_html.py     ← genera reporte HTML interactivo desde el Markdown
   run_benchmark.sh     ← orquestador principal (levanta containers, corre k6, compara)
   compare_results.py   ← genera tabla comparativa Markdown desde el JSON de k6
 

@@ -82,12 +82,25 @@ Un target puede no implementar un scenario: el runner imprime `SKIP` y sigue.
 
 `config/scenarios.json` es la única fuente de verdad. Estado actual:
 
-| scenario  | archivo               | descripción                                      |
-|-----------|-----------------------|--------------------------------------------------|
-| holamundo | scenarios/holamundo.js| GET básico sin I/O, mide throughput puro del framework |
+| scenario   | archivo                | método | descripción                                                      |
+|------------|------------------------|--------|------------------------------------------------------------------|
+| holamundo  | scenarios/holamundo.js | GET    | GET básico sin I/O, mide throughput puro del framework           |
+| dbquery    | scenarios/dbquery.js   | GET    | simula acceso a DB (I/O wait ~25ms), mide el modelo de concurrencia |
+| cpucompute | scenarios/cpucompute.js| GET    | CPU-bound: gen objetos + transform + O(n²) + O(n³), mide cómputo crudo |
+| memalloc   | scenarios/memalloc.js  | GET    | aloca N objetos anidados y serializa, mide presión de allocator/GC |
+| payload    | scenarios/payload.js   | POST   | deserializa+valida+serializa un JSON mediano, mide parsing de input |
 
 Cada scenario es un script k6 que lee `__ENV.TARGET_URL`, `__ENV.TEST_PATH` y `__ENV.TEST_METHOD`
 (inyectados por el runner), de modo que el mismo script sirve para todos los targets.
+
+**Trabajo canónico** (idéntico en los 8 targets, lo que hace justa la comparación):
+- `dbquery`: espera ~25ms (async donde el runtime lo permita; bloqueante en PHP) y devuelve 10 filas sintéticas.
+- `cpucompute`: lee `n` de query (default 200); doble loop O(n²) + multiplicación de matrices 64×64 O(C³), devuelve checksum.
+- `memalloc`: lee `n` de query (default 20000); construye N objetos anidados vivos a la vez, devuelve agregado + muestra.
+- `payload`: recibe `{items:[...100], meta}`, filtra activos, suma y devuelve muestra transformada.
+
+`n` viaja en el `path` del registry (`/cpucompute?n=200`), así se tunea desde `targets.json` sin rebuild.
+Cada scenario define su propio perfil de carga (stages/thresholds) en su `.js` — no se reusa el de holamundo.
 
 ## Cómo se ejecutan los benchmarks
 

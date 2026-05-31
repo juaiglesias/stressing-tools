@@ -60,5 +60,12 @@ Verificar que el container quede `healthy`, que k6 corra sin errores 200, y que 
 
 Si el container no queda healthy: `docker logs <name> --tail 30` — causa más común es que `curl` falte en la imagen o que el server escuche en un puerto distinto de 3000.
 
-### 5. Cerrar
-Recordar al usuario commitear: la entrada en `targets.json`, el dir `targets/<name>/`, y el `docker-compose.yml` regenerado. `results/` está gitignored; `reports/` se commitea.
+### 5. Actualizar README.md
+En la tabla de **Targets** del `README.md` agregar una fila con el nuevo target:
+```
+| <name>   | <lenguaje> + <framework>   | <port>   | /holamundo   |
+```
+También actualizar la sección **Estructura del repositorio** si corresponde (ej. el subdirectorio nuevo bajo `targets/`).
+
+### 6. Cerrar
+Recordar al usuario commitear: la entrada en `targets.json`, el dir `targets/<name>/`, el `docker-compose.yml` regenerado y el `README.md` actualizado. `results/` está gitignored; `reports/` se commitea.

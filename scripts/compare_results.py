@@ -185,12 +185,17 @@ def main():
     reports_dir = os.path.join(root, "reports")
     os.makedirs(reports_dir, exist_ok=True)
 
+    scenarios_json = os.path.join(root, "config", "scenarios.json")
+    with open(scenarios_json) as f:
+        scenario_order = [s["name"] for s in json.load(f)]
+
     ts = args.timestamp or datetime.now().strftime("%Y%m%d_%H%M%S")
     headers = ["target", "p50 (ms)", "p95 (ms)", "p99 (ms)", "requests", "errors (%)", "req/s", "peak CPU%", "peak Mem", "avg Mem"]
 
     report_lines = [f"# Benchmark Comparison — {ts}\n"]
 
-    for scenario, rows in sorted(by_scenario.items()):
+    ordered = sorted(by_scenario.items(), key=lambda kv: scenario_order.index(kv[0]) if kv[0] in scenario_order else 999)
+    for scenario, rows in ordered:
         rows.sort(key=lambda r: r["p95"])
 
         table_rows = []

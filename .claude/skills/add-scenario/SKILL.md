@@ -75,5 +75,20 @@ Si los targets necesitan exponer un endpoint nuevo para este scenario, hay que a
 ```
 Verificar que corra contra los targets que lo declaran y que aparezca como sección propia en `reports/comparison_<ts>.md`.
 
-### 5. Cerrar
-No hace falta regenerar el compose (los scenarios no afectan `docker-compose.yml`). Recordar commitear: `scenarios/<nombre>.js`, el registro en `scenarios.json`, y los cambios en `targets.json`.
+## Patrones útiles (ver scenarios existentes como referencia)
+
+- **Perfil de carga propio por scenario**: cada `.js` define sus `stages`/`thresholds`. Un scenario CPU/memory-bound usa pocos VUs y thresholds de latencia laxos (el dato es throughput/memoria, no p95); uno de I/O usa alta concurrencia para exponer el modelo del runtime. Ejemplos: `scenarios/dbquery.js` (100 VUs, p95<200), `scenarios/cpucompute.js` (20 VUs, p95<2000).
+- **Parámetro de tamaño vía query**: para hacer tuneable el costo del endpoint sin rebuild, pasá el parámetro en el `path` del registry (`"/cpucompute?n=200"`) y leelo en el server con un default. El scenario k6 no cambia (el query viaja dentro de `TEST_PATH`).
+- **POST con body**: ver `scenarios/payload.js` — el body se arma una vez (determinístico) y se manda con `http.post(url, JSON.stringify(body), { headers })`.
+- **Trabajo idéntico entre targets**: definí el algoritmo canónico (entradas fijas, mismo resultado) y replicá la semántica en cada lenguaje — eso es lo que hace comparable la medición.
+- **PHP/Laravel**: poné la lógica inline dentro de cada closure (no funciones top-level), porque con `route:cache` el `api.php` no se re-incluye por request.
+
+### 5. Actualizar README.md
+En la tabla de **Scenarios** del `README.md` agregar una fila con el nuevo scenario:
+```
+| <nombre>   | scenarios/<nombre>.js   | <GET/POST> | <descripción corta>  |
+```
+También actualizar la sección **Estructura del repositorio** si corresponde (ej. el `.js` nuevo bajo `scenarios/`).
+
+### 6. Cerrar
+No hace falta regenerar el compose (los scenarios no afectan `docker-compose.yml`). Recordar commitear: `scenarios/<nombre>.js`, el registro en `scenarios.json`, los cambios en `targets.json` y el `README.md` actualizado.

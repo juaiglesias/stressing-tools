@@ -130,3 +130,19 @@ services:
       timeout: 3s
       retries: 15
       start_period: 30s
+
+  rust-axum:
+    build: ./targets/rust-axum
+    ports:
+      - "3009:3000"
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 512m
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/holamundo"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+      start_period: 30s

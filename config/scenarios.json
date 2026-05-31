@@ -4,5 +4,29 @@
     "file": "scenarios/holamundo.js",
     "description": "GET básico sin I/O, mide throughput puro del framework",
     "enabled": true
+  },
+  {
+    "name": "dbquery",
+    "file": "scenarios/dbquery.js",
+    "description": "GET que simula acceso a DB (I/O wait ~25ms), mide el modelo de concurrencia bajo I/O",
+    "enabled": true
+  },
+  {
+    "name": "cpucompute",
+    "file": "scenarios/cpucompute.js",
+    "description": "GET CPU-bound (gen objetos + transform + O(n²) + O(n³)), mide cómputo crudo del runtime",
+    "enabled": true
+  },
+  {
+    "name": "memalloc",
+    "file": "scenarios/memalloc.js",
+    "description": "GET que aloca N objetos anidados y serializa, mide presión de allocator/GC",
+    "enabled": true
+  },
+  {
+    "name": "payload",
+    "file": "scenarios/payload.js",
+    "description": "POST que deserializa+valida+serializa un JSON mediano, mide parsing de input",
+    "enabled": true
   }
 ]

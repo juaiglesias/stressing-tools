@@ -6,10 +6,11 @@
     "port": 3001,
     "enabled": true,
     "tests": {
-      "holamundo": {
-        "method": "GET",
-        "path": "/holamundo"
-      }
+      "holamundo": { "method": "GET", "path": "/holamundo" },
+      "dbquery": { "method": "GET", "path": "/dbquery" },
+      "cpucompute": { "method": "GET", "path": "/cpucompute?n=200" },
+      "memalloc": { "method": "GET", "path": "/memalloc?n=20000" },
+      "payload": { "method": "POST", "path": "/payload" }
     }
   },
   {
@@ -19,10 +20,11 @@
     "port": 3002,
     "enabled": true,
     "tests": {
-      "holamundo": {
-        "method": "GET",
-        "path": "/holamundo"
-      }
+      "holamundo": { "method": "GET", "path": "/holamundo" },
+      "dbquery": { "method": "GET", "path": "/dbquery" },
+      "cpucompute": { "method": "GET", "path": "/cpucompute?n=200" },
+      "memalloc": { "method": "GET", "path": "/memalloc?n=20000" },
+      "payload": { "method": "POST", "path": "/payload" }
     }
   },
   {
@@ -32,10 +34,11 @@
     "port": 3003,
     "enabled": true,
     "tests": {
-      "holamundo": {
-        "method": "GET",
-        "path": "/holamundo"
-      }
+      "holamundo": { "method": "GET", "path": "/holamundo" },
+      "dbquery": { "method": "GET", "path": "/dbquery" },
+      "cpucompute": { "method": "GET", "path": "/cpucompute?n=200" },
+      "memalloc": { "method": "GET", "path": "/memalloc?n=20000" },
+      "payload": { "method": "POST", "path": "/payload" }
     }
   },
   {
@@ -45,10 +48,11 @@
     "port": 3004,
     "enabled": true,
     "tests": {
-      "holamundo": {
-        "method": "GET",
-        "path": "/api/holamundo"
-      }
+      "holamundo": { "method": "GET", "path": "/api/holamundo" },
+      "dbquery": { "method": "GET", "path": "/api/dbquery" },
+      "cpucompute": { "method": "GET", "path": "/api/cpucompute?n=200" },
+      "memalloc": { "method": "GET", "path": "/api/memalloc?n=20000" },
+      "payload": { "method": "POST", "path": "/api/payload" }
     }
   },
   {
@@ -58,10 +62,11 @@
     "port": 3005,
     "enabled": true,
     "tests": {
-      "holamundo": {
-        "method": "GET",
-        "path": "/holamundo"
-      }
+      "holamundo": { "method": "GET", "path": "/holamundo" },
+      "dbquery": { "method": "GET", "path": "/dbquery" },
+      "cpucompute": { "method": "GET", "path": "/cpucompute?n=200" },
+      "memalloc": { "method": "GET", "path": "/memalloc?n=20000" },
+      "payload": { "method": "POST", "path": "/payload" }
     }
   },
   {
@@ -71,10 +76,11 @@
     "port": 3006,
     "enabled": true,
     "tests": {
-      "holamundo": {
-        "method": "GET",
-        "path": "/api/holamundo"
-      }
+      "holamundo": { "method": "GET", "path": "/api/holamundo" },
+      "dbquery": { "method": "GET", "path": "/api/dbquery" },
+      "cpucompute": { "method": "GET", "path": "/api/cpucompute?n=200" },
+      "memalloc": { "method": "GET", "path": "/api/memalloc?n=20000" },
+      "payload": { "method": "POST", "path": "/api/payload" }
     }
   },
   {
@@ -84,10 +90,11 @@
     "port": 3007,
     "enabled": true,
     "tests": {
-      "holamundo": {
-        "method": "GET",
-        "path": "/api/holamundo"
-      }
+      "holamundo": { "method": "GET", "path": "/api/holamundo" },
+      "dbquery": { "method": "GET", "path": "/api/dbquery" },
+      "cpucompute": { "method": "GET", "path": "/api/cpucompute?n=200" },
+      "memalloc": { "method": "GET", "path": "/api/memalloc?n=20000" },
+      "payload": { "method": "POST", "path": "/api/payload" }
     }
   },
   {
@@ -97,10 +104,25 @@
     "port": 3008,
     "enabled": true,
     "tests": {
-      "holamundo": {
-        "method": "GET",
-        "path": "/holamundo"
-      }
+      "holamundo": { "method": "GET", "path": "/holamundo" },
+      "dbquery": { "method": "GET", "path": "/dbquery" },
+      "cpucompute": { "method": "GET", "path": "/cpucompute?n=200" },
+      "memalloc": { "method": "GET", "path": "/memalloc?n=20000" },
+      "payload": { "method": "POST", "path": "/payload" }
+    }
+  },
+  {
+    "name": "rust-axum",
+    "language": "rust",
+    "framework": "axum",
+    "port": 3009,
+    "enabled": true,
+    "tests": {
+      "holamundo": { "method": "GET", "path": "/holamundo" },
+      "dbquery": { "method": "GET", "path": "/dbquery" },
+      "cpucompute": { "method": "GET", "path": "/cpucompute?n=200" },
+      "memalloc": { "method": "GET", "path": "/memalloc?n=20000" },
+      "payload": { "method": "POST", "path": "/payload" }
     }
   }
 ]
