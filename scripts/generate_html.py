@@ -332,8 +332,15 @@ def main():
     out_path = args.out or os.path.join(reports_dir, f"comparison_{ts}.html")
     with open(out_path, "w") as f:
         f.write(html)
-
     print(f"HTML report saved to {out_path}")
+
+    # Always keep docs/index.html in sync (served by GitHub Pages)
+    docs_dir = os.path.join(root, "docs")
+    os.makedirs(docs_dir, exist_ok=True)
+    docs_path = os.path.join(docs_dir, "index.html")
+    with open(docs_path, "w") as f:
+        f.write(html)
+    print(f"GitHub Pages updated → {docs_path}")
 
 
 if __name__ == "__main__":

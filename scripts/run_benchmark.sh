@@ -155,3 +155,4 @@ done
 echo ""
 echo ">>> Generating comparison report..."
 python3 "$ROOT/scripts/compare_results.py" "$RESULTS_DIR" --timestamp "$TS"
+python3 "$ROOT/scripts/generate_html.py"   "$RESULTS_DIR" --timestamp "$TS"
