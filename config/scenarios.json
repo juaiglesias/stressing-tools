@@ -1,0 +1,8 @@
+[
+  {
+    "name": "holamundo",
+    "file": "scenarios/holamundo.js",
+    "description": "GET básico sin I/O, mide throughput puro del framework",
+    "enabled": true
+  }
+]

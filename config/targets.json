@@ -1,0 +1,106 @@
+[
+  {
+    "name": "node-express",
+    "language": "node",
+    "framework": "express",
+    "port": 3001,
+    "enabled": true,
+    "tests": {
+      "holamundo": {
+        "method": "GET",
+        "path": "/holamundo"
+      }
+    }
+  },
+  {
+    "name": "node-fastify",
+    "language": "node",
+    "framework": "fastify",
+    "port": 3002,
+    "enabled": true,
+    "tests": {
+      "holamundo": {
+        "method": "GET",
+        "path": "/holamundo"
+      }
+    }
+  },
+  {
+    "name": "node-nestjs",
+    "language": "node",
+    "framework": "nestjs",
+    "port": 3003,
+    "enabled": true,
+    "tests": {
+      "holamundo": {
+        "method": "GET",
+        "path": "/holamundo"
+      }
+    }
+  },
+  {
+    "name": "php-laravel",
+    "language": "php",
+    "framework": "laravel",
+    "port": 3004,
+    "enabled": true,
+    "tests": {
+      "holamundo": {
+        "method": "GET",
+        "path": "/api/holamundo"
+      }
+    }
+  },
+  {
+    "name": "python-fastapi",
+    "language": "python",
+    "framework": "fastapi",
+    "port": 3005,
+    "enabled": true,
+    "tests": {
+      "holamundo": {
+        "method": "GET",
+        "path": "/holamundo"
+      }
+    }
+  },
+  {
+    "name": "php-laravel-octane",
+    "language": "php",
+    "framework": "laravel-octane",
+    "port": 3006,
+    "enabled": true,
+    "tests": {
+      "holamundo": {
+        "method": "GET",
+        "path": "/api/holamundo"
+      }
+    }
+  },
+  {
+    "name": "php-laravel-fpm",
+    "language": "php",
+    "framework": "laravel-fpm",
+    "port": 3007,
+    "enabled": true,
+    "tests": {
+      "holamundo": {
+        "method": "GET",
+        "path": "/api/holamundo"
+      }
+    }
+  },
+  {
+    "name": "go-gin",
+    "language": "go",
+    "framework": "gin",
+    "port": 3008,
+    "enabled": true,
+    "tests": {
+      "holamundo": {
+        "method": "GET",
+        "path": "/holamundo"
+      }
+    }
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "name": "node-fastify",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "fastify": "^4.26.2"
+  }
+}

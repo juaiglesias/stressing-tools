@@ -1,0 +1,11 @@
+results/
+node_modules/
+*/node_modules/
+vendor/
+*.env
+.env
+__pycache__/
+*.pyc
+.next/
+dist/
+*.log
