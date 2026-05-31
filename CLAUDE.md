@@ -43,16 +43,16 @@ reports/             ← commiteados, tablas comparativas en Markdown
 
 `config/targets.json` es la única fuente de verdad. Estado actual:
 
-| target              | lenguaje | framework      | port host | endpoint        |
-|---------------------|----------|----------------|-----------|-----------------|
-| node-express        | node     | express        | 3001      | /holamundo      |
-| node-fastify        | node     | fastify        | 3002      | /holamundo      |
-| node-nestjs         | node     | nestjs         | 3003      | /holamundo      |
-| php-laravel         | php      | laravel        | 3004      | /api/holamundo  |
-| python-fastapi      | python   | fastapi        | 3005      | /holamundo      |
-| php-laravel-octane  | php      | laravel-octane | 3006      | /api/holamundo  |
-| php-laravel-fpm     | php      | laravel-fpm    | 3007      | /api/holamundo  |
-| go-gin              | go       | gin            | 3008      | /holamundo      |
+| target              | tecnología           | port host | endpoint        |
+|---------------------|----------------------|-----------|-----------------|
+| node-express        | node + express       | 3001      | /holamundo      |
+| node-fastify        | node + fastify       | 3002      | /holamundo      |
+| node-nestjs         | node + nestjs        | 3003      | /holamundo      |
+| php-laravel         | php + laravel        | 3004      | /api/holamundo  |
+| python-fastapi      | python + fastapi     | 3005      | /holamundo      |
+| php-laravel-octane  | php + laravel-octane | 3006      | /api/holamundo  |
+| php-laravel-fpm     | php + laravel-fpm    | 3007      | /api/holamundo  |
+| go-gin              | go + gin             | 3008      | /holamundo      |
 
 **Invariantes de todo target:**
 - Escucha internamente en el puerto **3000** (el port del registry es solo el mapeo al host).
