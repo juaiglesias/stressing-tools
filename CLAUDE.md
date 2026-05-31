@@ -25,39 +25,50 @@ targets/             ← un subdirectorio por target, cada uno con su Dockerfile
   php-laravel-fpm/     laravel sobre php-fpm + nginx (supervisord)
   php-laravel-octane/  laravel octane sobre swoole, 4 workers
   go-gin/              gin (binario compilado, imagen alpine)
+  rust-axum/           axum + tokio (multi-stage build, imagen alpine)
 
 scenarios/
-  holamundo.js       ← GET básico sin I/O, 50 VUs, ramp 10s + 30s sostenido + 10s down
+  holamundo.js       ← GET básico sin I/O, 50 VUs
+  dbquery.js         ← GET con I/O wait ~25ms, 100 VUs
+  cpucompute.js      ← GET CPU-bound O(n²)+O(C³), 20 VUs
+  memalloc.js        ← GET con N objetos vivos, 20 VUs
+  payload.js         ← POST JSON parse/validate/serialize, 50 VUs
 
 scripts/
   generate_compose.py  ← genera docker-compose.yml desde targets.json
+  generate_html.py     ← genera reporte HTML interactivo (también actualiza docs/index.html)
   run_benchmark.sh     ← orquestador principal (levanta containers, corre k6, compara)
   compare_results.py   ← genera tabla comparativa Markdown desde el JSON de k6
 
 docker-compose.yml   ← GENERADO desde targets.json — no editar a mano
 results/             ← gitignored, JSON NDJSON de k6 + JSONL de docker stats
-reports/             ← commiteados, tablas comparativas en Markdown
+reports/             ← commiteados, tablas comparativas en Markdown + HTML por run
+docs/
+  index.html         ← reporte HTML más reciente (GitHub Pages)
 ```
 
 ## Targets
 
 `config/targets.json` es la única fuente de verdad. Estado actual:
 
-| target              | tecnología           | port host | endpoint        |
-|---------------------|----------------------|-----------|-----------------|
-| node-express        | node + express       | 3001      | /holamundo      |
-| node-fastify        | node + fastify       | 3002      | /holamundo      |
-| node-nestjs         | node + nestjs        | 3003      | /holamundo      |
-| php-laravel         | php + laravel        | 3004      | /api/holamundo  |
-| python-fastapi      | python + fastapi     | 3005      | /holamundo      |
-| php-laravel-octane  | php + laravel-octane | 3006      | /api/holamundo  |
-| php-laravel-fpm     | php + laravel-fpm    | 3007      | /api/holamundo  |
-| go-gin              | go + gin             | 3008      | /holamundo      |
+| target              | tecnología           | port host |
+|---------------------|----------------------|-----------|
+| node-express        | node + express       | 3001      |
+| node-fastify        | node + fastify       | 3002      |
+| node-nestjs         | node + nestjs        | 3003      |
+| php-laravel         | php + laravel        | 3004      |
+| python-fastapi      | python + fastapi     | 3005      |
+| php-laravel-octane  | php + laravel-octane | 3006      |
+| php-laravel-fpm     | php + laravel-fpm    | 3007      |
+| go-gin              | go + gin             | 3008      |
+| rust-axum           | rust + axum          | 3009      |
+
+Los endpoints exactos de cada scenario por target están en `config/targets.json` (campo `tests`).
 
 **Invariantes de todo target:**
 - Escucha internamente en el puerto **3000** (el port del registry es solo el mapeo al host).
 - La imagen incluye `curl` (lo usa el healthcheck del compose).
-- Expone al menos el endpoint del scenario `holamundo` devolviendo HTTP 200.
+- Implementa todos los scenarios declarados en su entrada `tests` de `targets.json`, devolviendo HTTP 200. Un target puede optar por no declarar un scenario (el runner imprime `SKIP`), pero lo que declare debe funcionar.
 
 ### Estructura de un target en targets.json
 

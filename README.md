@@ -15,22 +15,24 @@ de CPU y memoria (pico/promedio) por target — disponible en Markdown y como
 
 `config/targets.json` es la única fuente de verdad de los targets.
 
-| target              | tecnología           | port host | endpoint        |
-|---------------------|----------------------|-----------|-----------------|
-| node-express        | node + express       | 3001      | /holamundo      |
-| node-fastify        | node + fastify       | 3002      | /holamundo      |
-| node-nestjs         | node + nestjs        | 3003      | /holamundo      |
-| php-laravel         | php + laravel        | 3004      | /api/holamundo  |
-| python-fastapi      | python + fastapi     | 3005      | /holamundo      |
-| php-laravel-octane  | php + laravel-octane | 3006      | /api/holamundo  |
-| php-laravel-fpm     | php + laravel-fpm    | 3007      | /api/holamundo  |
-| go-gin              | go + gin             | 3008      | /holamundo      |
-| rust-axum           | rust + axum          | 3009      | /holamundo      |
+| target              | tecnología           | port host |
+|---------------------|----------------------|-----------|
+| node-express        | node + express       | 3001      |
+| node-fastify        | node + fastify       | 3002      |
+| node-nestjs         | node + nestjs        | 3003      |
+| php-laravel         | php + laravel        | 3004      |
+| python-fastapi      | python + fastapi     | 3005      |
+| php-laravel-octane  | php + laravel-octane | 3006      |
+| php-laravel-fpm     | php + laravel-fpm    | 3007      |
+| go-gin              | go + gin             | 3008      |
+| rust-axum           | rust + axum          | 3009      |
+
+Los endpoints expuestos por cada target y el path exacto de cada scenario están en `config/targets.json` (campo `tests`).
 
 **Invariantes de todo target:**
 - Escucha internamente en el puerto **3000** (el port del registry es solo el mapeo al host).
 - La imagen incluye `curl` (lo usa el healthcheck del compose).
-- Expone al menos el endpoint del scenario `holamundo` devolviendo HTTP 200.
+- Implementa todos los scenarios declarados en su entrada `tests` de `targets.json`, devolviendo HTTP 200. Un target puede optar por no declarar un scenario (el runner imprime `SKIP`), pero lo que declare debe funcionar.
 
 ## Scenarios
 
